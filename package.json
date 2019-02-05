@@ -2,9 +2,12 @@
   "name": "movies-graphql-server",
   "version": "1.0.0",
   "description": "",
-  "main": "server/index.js",
+  "main": "dist/server.js",
   "scripts": {
-    "start": "node server/index.js",
+    "start": "rimraf ./dist && webpack && node dist/server.js",
+    "dev": "npm-run-all --parallel watch:build watch:server",
+    "watch:build": "webpack --watch",
+    "watch:server": "nodemon ./dist/index.js --watch dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -17,5 +20,14 @@
     "graphql": "^0.13.2",
     "node-fetch": "^2.3.0",
     "universal-fetch": "^1.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "babel-loader": "^8.0.5",
+    "nodemon": "^1.18.9",
+    "npm-run-all": "^4.1.5",
+    "webpack": "^4.29.1",
+    "webpack-cli": "^3.2.3",
+    "webpack-node-externals": "^1.7.2"
   }
 }

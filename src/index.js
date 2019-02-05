@@ -1,5 +1,5 @@
-const express = require('express')
-const { ApolloServer } = require('apollo-server-express')
+import express from 'express'
+import { ApolloServer } from 'apollo-server-express'
 
 const { typeDefs } = require('./typeDefs')
 const { resolvers } = require('./resolvers')
@@ -21,7 +21,6 @@ const server = new ApolloServer({
   }),
   context: () => ({}),
 })
-
 
 const app = express()
 server.applyMiddleware({
