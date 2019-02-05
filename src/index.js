@@ -1,11 +1,18 @@
-import express from 'express'
-import { ApolloServer } from 'apollo-server-express'
+import { ApolloServer } from 'apollo-server'
 
-const { typeDefs } = require('./typeDefs')
-const { resolvers } = require('./resolvers')
-const { ShowsAPI } = require('./api/ShowsAPI')
+import { typeDefs } from './typeDefs'
+import { resolvers } from './resolvers'
+import { ShowsAPI, UserAPI } from './api'
 
 const port = parseInt(process.env.PORT, 10) || 4000
+
+const sleep = ms => new Promise((resolve) => setTimeout(resolve, ms))
+
+const getUser = async (req, ms) => {
+  // Here you will fetch user
+  await sleep(ms)
+  return { id: 'user-id' }
+}
 
 // In the most basic sense, the ApolloServer can be started
 // by passing type definitions (typeDefs) and the resolvers
@@ -18,16 +25,17 @@ const server = new ApolloServer({
   },
   dataSources: () => ({
     showsAPI: new ShowsAPI(),
+    userAPI: new UserAPI(),
   }),
-  context: () => ({}),
+  context: async ({ req, res }) => ({
+    user: getUser(req, 10),
+    req,
+    res,
+  }),
 })
 
-const app = express()
-server.applyMiddleware({
-  app,
-  path: '/',
-})
-
-app.listen({ port }, () =>
-  console.log(`🚀 Server ready at http://localhost:${port}${server.graphqlPath}`),
-)
+server
+  .listen({ port })
+  .then(() =>
+    console.log(`🚀 Server ready at http://localhost:${port}${server.graphqlPath}`),
+  )

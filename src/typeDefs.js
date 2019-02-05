@@ -1,6 +1,13 @@
-const { gql } = require('apollo-server-express')
+import { gql } from 'apollo-server'
 
-const typeDefs = gql`
+export const typeDefs = gql`
+  type User {
+    id: ID!
+    name: String!
+    isAdmin: Boolean
+    banned: Boolean
+  }
+  
   type Show {
     id: ID!
     name: String!
@@ -10,7 +17,7 @@ const typeDefs = gql`
     image: Image!
     summary: String
   }
-  
+
   type Image {
     medium: String
     original: String
@@ -19,7 +26,6 @@ const typeDefs = gql`
   type Query {
     shows: [Show!]!
     show(id: ID!): Show
+    user(id: ID!): User
   }
 `
-
-module.exports = { typeDefs }
