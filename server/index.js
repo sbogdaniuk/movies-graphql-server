@@ -19,15 +19,16 @@ const server = new ApolloServer({
   dataSources: () => ({
     showsAPI: new ShowsAPI(),
   }),
-  context: () => ({
-
-  })
+  context: () => ({}),
 })
 
 
-const app = express();
-server.applyMiddleware({ app });
+const app = express()
+server.applyMiddleware({
+  app,
+  path: '/',
+})
 
 app.listen({ port }, () =>
-  console.log(`🚀 Server ready at http://localhost:${port}${server.graphqlPath}`)
-);
+  console.log(`🚀 Server ready at http://localhost:${port}${server.graphqlPath}`),
+)
