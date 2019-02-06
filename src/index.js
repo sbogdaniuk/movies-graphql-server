@@ -1,41 +1,45 @@
-import { ApolloServer } from 'apollo-server'
+import express from 'express'
+import cookieParser from 'cookie-parser'
+import { ApolloServer } from 'apollo-server-express'
 
-import { typeDefs } from './typeDefs'
-import { resolvers } from './resolvers'
+import { schema } from './schema'
 import { ShowsAPI, UserAPI } from './api'
+import { SECRET, SECRET2 } from './config'
+import { formatError, jwtCheck } from './utils'
 
 const port = parseInt(process.env.PORT, 10) || 4000
 
-const sleep = ms => new Promise((resolve) => setTimeout(resolve, ms))
 
-const getUser = async (req, ms) => {
-  // Here you will fetch user
-  await sleep(ms)
-  return { id: 'user-id' }
-}
+const dataSources = () => ({
+  showsAPI: new ShowsAPI(),
+  userAPI: new UserAPI(),
+})
 
-// In the most basic sense, the ApolloServer can be started
-// by passing type definitions (typeDefs) and the resolvers
-// responsible for fetching the data for those types.
+const app = express()
+
+app.use(cookieParser())
+app.use(jwtCheck({ SECRET, SECRET2, dataSources: dataSources() }))
+
 const server = new ApolloServer({
-  typeDefs,
-  resolvers,
+  schema,
   engine: process.env.ENGINE_API_KEY && {
     apiKey: process.env.ENGINE_API_KEY,
   },
-  dataSources: () => ({
-    showsAPI: new ShowsAPI(),
-    userAPI: new UserAPI(),
-  }),
-  context: async ({ req, res }) => ({
-    user: getUser(req, 10),
+  formatError,
+  dataSources,
+  context: ({ req, res }) => ({
     req,
     res,
+    SECRET,
+    SECRET2,
   }),
 })
 
-server
-  .listen({ port })
-  .then(() =>
-    console.log(`🚀 Server ready at http://localhost:${port}${server.graphqlPath}`),
-  )
+server.applyMiddleware({
+  app,
+  path: '/',
+})
+
+app.listen({ port }, () =>
+  console.log(`🚀 Server ready at http://localhost:${port}${server.graphqlPath}`),
+)

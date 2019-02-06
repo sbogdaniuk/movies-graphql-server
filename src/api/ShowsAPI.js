@@ -1,11 +1,11 @@
 const { RESTDataSource } = require('apollo-datasource-rest')
 
-const { config } = require('../config')
+const { API } = require('../config')
 
 export class ShowsAPI extends RESTDataSource {
   constructor () {
     super()
-    this.baseURL = config.API
+    this.baseURL = API
   }
 
   async getShows () {
