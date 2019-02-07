@@ -36,12 +36,12 @@ export const login = {
 
     const [token, refreshToken] = await createTokens(user, SECRET, SECRET2 + user.password)
 
-    // const tokenOptions = {
-    //   maxAge: 60 * 60 * 24 * 7, // 7d
-    //   httpOnly: true,
-    // }
-    // ctx.res.cookie('token', token, tokenOptions)
-    // ctx.res.cookie('refresh-token', refreshToken, tokenOptions)
+    const tokenOptions = {
+      maxAge: 60 * 60 * 24 * 7, // 7d
+      httpOnly: true,
+    }
+    ctx.res.cookie('token', token, tokenOptions)
+    ctx.res.cookie('refresh-token', refreshToken, tokenOptions)
 
     return { token, refreshToken }
   },

@@ -7,7 +7,7 @@ const typeDefs = gql`
     isAdmin: Boolean
     isBanned: Boolean
   }
-  
+
   extend type Query {
     user(id: ID!): User
   }

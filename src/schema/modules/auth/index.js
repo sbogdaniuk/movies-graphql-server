@@ -1,14 +1,11 @@
 import { gql } from 'apollo-server-express'
-import { skip, combineResolvers } from 'graphql-resolvers'
-
-import { baseResolver } from '../../resolvers'
 
 import { login } from './login'
+import { me } from './me'
 
 const typeDefs = gql`
   extend type Query {
     me: User
-    me3: String
   }
 
   extend type Mutation {
@@ -28,10 +25,7 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    me: baseResolver.createResolver(async (obj, args, ctx, info) => {
-      const res = await ctx.dataSources.userAPI.getUser(1)
-      return res || null
-    }),
+    me,
   },
   Mutation: {
     login,

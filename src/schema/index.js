@@ -3,7 +3,7 @@ import { addMockFunctionsToSchema, makeExecutableSchema } from 'graphql-tools'
 import { applyMiddleware } from 'graphql-middleware'
 
 import { auth, shows, users } from './modules'
-import { mutationArgsValidation } from './middlewares'
+import { mutationArgsValidation } from '../middlewares'
 
 // we can't use empty types
 const rootTypeDefs = gql`
@@ -15,7 +15,7 @@ const rootTypeDefs = gql`
   }
 `
 
-export const schema = makeExecutableSchema({
+const executableSchema = makeExecutableSchema({
   // merge all schemas and resolvers from modules
   ...[
     users,
@@ -31,12 +31,12 @@ export const schema = makeExecutableSchema({
 })
 
 // mock _empty field
-addMockFunctionsToSchema({
-  schema,
-  preserveResolvers: true,
-})
+// addMockFunctionsToSchema({
+//   schema: executableSchema,
+//   preserveResolvers: true,
+// })
 
-export const schemaWithMiddleware = applyMiddleware(
-  schema,
+export const schema = applyMiddleware(
+  executableSchema,
   mutationArgsValidation,
 )
