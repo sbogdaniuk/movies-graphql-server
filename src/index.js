@@ -2,13 +2,12 @@ import express from 'express'
 import cookieParser from 'cookie-parser'
 import { ApolloServer } from 'apollo-server-express'
 
-import { schema } from './schema'
+import { schema, schemaWithMiddleware } from './schema'
 import { ShowsAPI, UserAPI } from './api'
 import { SECRET, SECRET2 } from './config'
 import { formatError, jwtCheck } from './utils'
 
 const port = parseInt(process.env.PORT, 10) || 4000
-
 
 const dataSources = () => ({
   showsAPI: new ShowsAPI(),
@@ -21,7 +20,8 @@ app.use(cookieParser())
 app.use(jwtCheck({ SECRET, SECRET2, dataSources: dataSources() }))
 
 const server = new ApolloServer({
-  schema,
+  // schema,
+  schema: schemaWithMiddleware,
   engine: process.env.ENGINE_API_KEY && {
     apiKey: process.env.ENGINE_API_KEY,
   },

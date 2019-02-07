@@ -1,7 +1,9 @@
 import { gql } from 'apollo-server-express'
 import { addMockFunctionsToSchema, makeExecutableSchema } from 'graphql-tools'
+import { applyMiddleware } from 'graphql-middleware'
 
 import { auth, shows, users } from './modules'
+import { mutationArgsValidation } from './middlewares'
 
 // we can't use empty types
 const rootTypeDefs = gql`
@@ -33,3 +35,8 @@ addMockFunctionsToSchema({
   schema,
   preserveResolvers: true,
 })
+
+export const schemaWithMiddleware = applyMiddleware(
+  schema,
+  mutationArgsValidation,
+)
