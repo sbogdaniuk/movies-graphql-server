@@ -34,4 +34,4 @@ const resolvers = {
   },
 }
 
-export const shows = { typeDefs, resolvers }
+export const show = { typeDefs, resolvers }

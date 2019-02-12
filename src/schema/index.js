@@ -1,8 +1,11 @@
 import { gql } from 'apollo-server-express'
-import { addMockFunctionsToSchema, makeExecutableSchema } from 'graphql-tools'
+import { makeExecutableSchema } from 'graphql-tools'
 import { applyMiddleware } from 'graphql-middleware'
+import { shield } from 'graphql-shield'
+import merge from 'lodash/merge'
 
-import { auth, shows, users } from './modules'
+import { me, show, user } from './queries'
+import { signIn, signOut } from './mutations'
 import { mutationArgsValidation } from '../middlewares'
 
 // we can't use empty types
@@ -18,9 +21,13 @@ const rootTypeDefs = gql`
 const executableSchema = makeExecutableSchema({
   // merge all schemas and resolvers from modules
   ...[
-    users,
-    shows,
-    auth,
+    // Query
+    me,
+    user,
+    show,
+    // Mutation
+    signIn,
+    signOut,
   ].reduce((acc, d) => ({
     typeDefs: [...acc.typeDefs, d.typeDefs],
     resolvers: [...acc.resolvers, d.resolvers],
@@ -30,13 +37,13 @@ const executableSchema = makeExecutableSchema({
   }),
 })
 
-// mock _empty field
-// addMockFunctionsToSchema({
-//   schema: executableSchema,
-//   preserveResolvers: true,
-// })
+
+const permissions = shield(merge(
+  me.shield,
+))
 
 export const schema = applyMiddleware(
   executableSchema,
   mutationArgsValidation,
+  permissions,
 )

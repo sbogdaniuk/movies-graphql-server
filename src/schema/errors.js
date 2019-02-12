@@ -15,3 +15,7 @@ export const InvalidParamsError = createError('InvalidParams', {
 export const MutationError = createError('MutationError', {
   message: 'You are not allowed',
 })
+
+export const NotAuthenticatedError = createError('NotAuthenticatedError', {
+  message: 'You must be logged in'
+});

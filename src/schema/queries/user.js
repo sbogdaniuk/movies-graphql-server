@@ -15,10 +15,8 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    user: (root, args, ctx) => {
-      return ctx.dataSources.userAPI.getUser(args.id)
-    },
+    user: (root, args, ctx) => ctx.dataSources.userAPI.getUser(args.id),
   },
 }
 
-export const users = { typeDefs, resolvers }
+export const user = { typeDefs, resolvers }
