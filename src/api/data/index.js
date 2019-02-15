@@ -18,4 +18,10 @@ export const users = [{
   isBanned: false,
   email: 'user-2@email.com',
   password: bcrypt.hashSync('1234567890', 12),
+}, {
+  id: 'id-4',
+  name: 'Admin 2',
+  isAdmin: true,
+  email: 'admin-2@email.com',
+  password: bcrypt.hashSync('1234567890', 12),
 }]

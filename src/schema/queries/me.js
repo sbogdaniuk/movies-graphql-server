@@ -1,6 +1,6 @@
 import { gql } from 'apollo-server-express'
 
-import { NotAuthenticatedError } from '../errors'
+import { AuthenticationError } from '../errors'
 import { isAuthenticated } from '../rules'
 
 const shield = {
@@ -26,7 +26,7 @@ const resolvers = {
       res.clearCookie('token')
       res.clearCookie('refresh-token')
 
-      throw new NotAuthenticatedError()
+      throw new AuthenticationError()
     },
   },
 }

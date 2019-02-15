@@ -1,3 +1,4 @@
 export * from './me'
-export * from './user'
 export * from './show'
+export * from './user'
+export * from './users'

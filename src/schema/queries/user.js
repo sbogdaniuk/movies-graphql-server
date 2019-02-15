@@ -1,13 +1,14 @@
 import { gql } from 'apollo-server-express'
+import { and } from 'graphql-shield'
+import { isAdmin, isAuthenticated } from '../rules'
+
+const shield = {
+  Query: {
+    user: and(isAuthenticated, isAdmin)
+  }
+}
 
 const typeDefs = gql`
-  type User {
-    id: ID!
-    name: String!
-    isAdmin: Boolean
-    isBanned: Boolean
-  }
-
   extend type Query {
     user(id: ID!): User
   }
@@ -15,8 +16,8 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    user: (root, args, ctx) => ctx.dataSources.userAPI.getUser(args.id),
+    user: (root, args, ctx) => ctx.dataSources.userAPI.getUserById(args.id),
   },
 }
 
-export const user = { typeDefs, resolvers }
+export const user = { typeDefs, resolvers, shield }

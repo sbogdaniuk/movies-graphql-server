@@ -20,7 +20,7 @@ export const refreshTokens = async (token, refreshToken, userAPI, SECRET, SECRET
 
   if (!userId) return {}
 
-  const user = await userAPI.getUser({ id: userId })
+  const user = await userAPI.getUserById(userId)
 
   if (!user) return {}
 

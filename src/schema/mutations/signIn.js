@@ -4,7 +4,7 @@ import isEmpty from 'lodash/isEmpty'
 import { gql } from 'apollo-server-express'
 
 import { createTokens, RULES, validate } from '../../utils'
-import { InvalidParamsError, MutationError } from '../errors'
+import { ParamsError, MutationError } from '../errors'
 
 const typeDefs = gql`
   extend type Mutation {
@@ -34,7 +34,7 @@ const resolvers = {
         })
 
         if (!isEmpty(errors)) {
-          throw new InvalidParamsError({ data: errors })
+          throw new ParamsError({ data: errors })
         }
       },
       resolve: async (obj, args, ctx) => {

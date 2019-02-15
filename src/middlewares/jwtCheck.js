@@ -6,9 +6,8 @@ export const jwtCheck = ({ SECRET, SECRET2, userAPI }) => async (req, res) => {
   const token = req.cookies.token || req.headers.token
 
   try {
-    const { user } = await jwt.verify(token, SECRET)
-
-    req.user = user
+    const { user: { id } } = await jwt.verify(token, SECRET)
+    req.user = await userAPI.getUserById(id)
   } catch (err) {
     const refreshToken = req.cookies['refresh-token'] || req.headers['refresh-token'] || req.headers['refreshtoken']
 

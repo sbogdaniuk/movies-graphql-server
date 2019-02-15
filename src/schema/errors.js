@@ -5,17 +5,21 @@ export const UnknownError = createError('UnknownError', {
 })
 
 export const NotFound = createError('NotFound', {
-  message: 'Not Found',
+  message: 'Not found',
 })
 
-export const InvalidParamsError = createError('InvalidParams', {
-  message: 'Invalid Params',
+export const ParamsError = createError('ParamsError', {
+  message: 'Invalid params',
 })
 
 export const MutationError = createError('MutationError', {
-  message: 'You are not allowed',
+  message: 'Can\'t do it',
 })
 
-export const NotAuthenticatedError = createError('NotAuthenticatedError', {
-  message: 'You must be logged in'
+export const AuthenticationError = createError('AuthenticationError', {
+  message: 'Who are you?'
+});
+
+export const RoleError = createError('RoleError', {
+  message: 'Wrong permission'
 });
