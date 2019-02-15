@@ -39,19 +39,20 @@ const server = new ApolloServer({
       user: req.user,
     }
   },
-  // subscriptions: {
+  subscriptions: {
+    path: '/'
     // onConnect: (connectionParams, webSocket, context) => {
     //   console.log(111, 'onConnect')
     // },
     // onDisconnect: (webSocket, context) => {
     //   console.log(222, 'onDisconnect')
     // },
-  // },
+  },
 })
 
 server.applyMiddleware({
   app,
-  // path: '/',
+  path: '/',
 })
 
 const httpServer = http.createServer(app);
