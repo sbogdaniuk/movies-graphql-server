@@ -2,11 +2,9 @@
   "name": "movies-graphql-server",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/server.js",
+  "main": "src/server.js",
   "scripts": {
-    "clean": "rimraf ./node_modules ./dist",
-    "start": "nodemon --exec babel-node src/index.js",
-    "dev": "npm start -- --watch ./src",
+    "start": "nodemon --exec babel-node src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -36,12 +34,6 @@
     "@babel/core": "^7.2.2",
     "@babel/node": "^7.2.2",
     "@babel/preset-env": "^7.3.1",
-    "babel-loader": "^8.0.5",
-    "nodemon": "^1.18.9",
-    "npm-run-all": "^4.1.5",
-    "rimraf": "^2.6.3",
-    "webpack": "^4.29.1",
-    "webpack-cli": "^3.2.3",
-    "webpack-node-externals": "^1.7.2"
+    "nodemon": "^1.18.9"
   }
 }
