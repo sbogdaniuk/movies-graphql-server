@@ -1,4 +1,4 @@
-import gql from 'graphql-tag'
+import { gql } from 'apollo-server-express'
 
 export const typeDefs = gql`
   # we can't use empty types
@@ -11,7 +11,7 @@ export const typeDefs = gql`
   type Subscription {
     _empty: String @deprecated(reason: "Dummy field")
   }
-  
+
   type User {
     id: ID!
     name: String!

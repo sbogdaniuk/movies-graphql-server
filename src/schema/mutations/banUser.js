@@ -8,20 +8,11 @@ const USER_BANNED = 'USER_BANNED'
 
 const typeDefs = gql`
   extend type Subscription {
-    userBanned: BanUserPayload!
+    userBanned: User!
   }
 
   extend type Mutation {
-    banUser(input: BanUserInput!): BanUserPayload!
-  }
-
-  input BanUserInput {
-    id: ID!
-  }
-
-  type BanUserPayload {
-    id: ID!
-    isBanned: Boolean
+    banUser(id: ID!): User!
   }
 `
 
@@ -33,7 +24,7 @@ const resolvers = {
   },
   Mutation: {
     banUser: {
-      resolve: async (obj, { input: { id } }, { dataSources, user }) => {
+      resolve: async (obj, { id }, { dataSources, user }) => {
 
         const badUser = await dataSources.userAPI.getUserById(id)
         if (!badUser) {

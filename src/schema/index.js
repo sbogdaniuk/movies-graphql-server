@@ -4,6 +4,7 @@ import { shield } from 'graphql-shield'
 import merge from 'lodash/merge'
 
 import { typeDefs } from './typeDefs'
+import { resolvers } from './resolvers'
 import { me, show, user, users } from './queries'
 import { signIn, signOut, banUser } from './mutations'
 import { mutationArgsValidation } from '../middlewares'
@@ -28,7 +29,7 @@ const executableSchema = makeExecutableSchema({
     resolvers: [...acc.resolvers, d.resolvers],
   }), {
     typeDefs: [typeDefs],
-    resolvers: [],
+    resolvers: [resolvers],
   }),
 })
 

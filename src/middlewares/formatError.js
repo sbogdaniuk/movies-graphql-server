@@ -13,11 +13,14 @@ export const formatError = error => {
     })
 
   // log internalData to stdout but not include it in the formattedError
-  logger.warn(JSON.stringify({
-    type: apolloError.name,
-    data: apolloError.data,
-    internalData: apolloError.internalData,
-  }, null, 2))
+  // logger.warn(JSON.stringify({
+  //   type: apolloError.name,
+  //   data: apolloError.data,
+  //   internalData: apolloError.internalData,
+  // }, null, 2))
+  // logger.warn(originalError.stack)
+  logger.warn(originalError.name)
+  logger.warn(originalError.message)
   logger.warn(originalError.stack)
 
   return apolloFormatError(apolloError)
