@@ -43,6 +43,8 @@ const startServer = async () => {
         user: req.user,
       }
     },
+    playground: true,
+    introspection: true,
     subscriptions: {
       path: '/',
       // onConnect: (connectionParams, webSocket, context) => {
