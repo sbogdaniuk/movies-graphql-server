@@ -19,8 +19,6 @@ export const formatError = error => {
   //   internalData: apolloError.internalData,
   // }, null, 2))
   // logger.warn(originalError.stack)
-  logger.warn(originalError.name)
-  logger.warn(originalError.message)
   logger.warn(originalError.stack)
 
   return apolloFormatError(apolloError)

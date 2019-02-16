@@ -9,7 +9,7 @@ export const createTokens = async (user, SECRET, SECRET2) => {
   return Promise.all([createToken, createRefreshToken])
 }
 
-export const refreshTokens = async (token, refreshToken, userAPI, SECRET, SECRET2) => {
+export const refreshTokens = async (token, refreshToken, getUserById, SECRET, SECRET2) => {
   let userId = -1
   try {
     const { user: { id } } = jwt.decode(refreshToken)
@@ -20,7 +20,7 @@ export const refreshTokens = async (token, refreshToken, userAPI, SECRET, SECRET
 
   if (!userId) return {}
 
-  const user = await userAPI.getUserById(userId)
+  const user = await getUserById(userId)
 
   if (!user) return {}
 

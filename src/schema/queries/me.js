@@ -1,6 +1,5 @@
 import { gql } from 'apollo-server-express'
 
-import { AuthenticationError } from '../errors'
 import { isAuthenticated } from '../rules'
 
 const shield = {
@@ -18,15 +17,7 @@ const typeDefs = gql`
 const resolvers = {
   Query: {
     me: async (obj, args, { dataSources, user, res }, info) => {
-      if (user) {
-        const res = await dataSources.userAPI.getUser({ id: user.id })
-        if (res) return res
-      }
-
-      res.clearCookie('token')
-      res.clearCookie('refresh-token')
-
-      throw new AuthenticationError()
+      return await dataSources.userAPI.getUser({ id: user.id })
     },
   },
 }
