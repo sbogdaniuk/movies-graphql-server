@@ -4,7 +4,9 @@
   "description": "",
   "main": "src/server.js",
   "scripts": {
-    "start": "nodemon --exec babel-node src/server.js",
+    "start:server": "nodemon --exec babel-node src/server.js",
+    "start": "NODE_ENV=production npm run start:server",
+    "dev": "NODE_ENV=development npm run start:server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

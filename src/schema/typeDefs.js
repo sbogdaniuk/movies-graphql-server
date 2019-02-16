@@ -3,7 +3,7 @@ import { gql } from 'apollo-server-express'
 export const typeDefs = gql`
   # we can't use empty types
   type Query {
-    _empty: String @deprecated(reason: "Dummy field")
+    nodeEnv: String
   }
   type Mutation {
     _empty: String @deprecated(reason: "Dummy field")
