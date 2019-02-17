@@ -1,5 +1,5 @@
 type Query {
-  nodeEnv: String
+  nodeEnv: String @cacheControl(maxAge: 100)
 }
 type Mutation {
   _empty: String @deprecated(reason: "Dummy field")

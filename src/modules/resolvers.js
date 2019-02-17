@@ -1,5 +1,10 @@
+import { sleep } from '../utils'
+
 export const resolvers = {
   Query: {
-    nodeEnv: () => process.env.NODE_ENV
+    nodeEnv: async () => {
+      await sleep(1000)
+      return process.env.NODE_ENV
+    }
   }
 }
