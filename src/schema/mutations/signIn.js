@@ -42,13 +42,11 @@ const resolvers = {
         const { dataSources, SECRET, SECRET2 } = ctx
 
         const user = await dataSources.userAPI.getUser({ email })
-        console.log(111, 'user', user)
         if (!user) {
           // user with provided email not found
           throw new MutationError({ message: 'Invalid login' })
         }
 
-        console.log(222, 'password', password)
         const valid = await bcrypt.compare(password, user.password)
         if (!valid) {
           // bad password

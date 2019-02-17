@@ -1,4 +1,4 @@
-import { gql, PubSub } from 'apollo-server-express'
+import { gql, PubSub, withFilter } from 'apollo-server-express'
 
 import { MutationError, NotFound, RoleError } from '../errors'
 
@@ -8,7 +8,7 @@ const USER_BANNED = 'USER_BANNED'
 
 const typeDefs = gql`
   extend type Subscription {
-    userBanned: User!
+    userBanned(id: ID!): User!
   }
 
   extend type Mutation {
@@ -19,7 +19,10 @@ const typeDefs = gql`
 const resolvers = {
   Subscription: {
     userBanned: {
-      subscribe: () => pubsub.asyncIterator([USER_BANNED]),
+      subscribe: withFilter(
+        () => pubsub.asyncIterator([USER_BANNED]),
+        (payload, variables) => payload.userBanned.id === variables.id,
+      )
     },
   },
   Mutation: {

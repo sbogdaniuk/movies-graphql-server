@@ -25,7 +25,7 @@ const generateUser = (user) => (n) => {
     isAdmin: Math.random() > .8,
     isBanned: Math.random() > .5,
     password: passwords[n],
-    ...user
+    ...user,
   }
 }
 
@@ -37,6 +37,12 @@ export const genDB = async () => {
       name: 'Super Admin',
       isAdmin: true,
       email: 'admin@email.com',
+      password: bcrypt.hashSync('1234567890', 12),
+    }, {
+      id: '2',
+      name: 'Default User',
+      isBanned: false,
+      email: 'user@email.com',
       password: bcrypt.hashSync('1234567890', 12),
     },
       ...times(usersCount, generateUser())],
