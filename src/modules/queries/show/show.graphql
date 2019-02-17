@@ -1,4 +1,4 @@
-type Show {
+type Show @cacheControl(maxAge: 240) {
   id: ID!
   name: String!
   type: String
@@ -6,9 +6,10 @@ type Show {
   genres: [String]!
   image: Image!
   summary: String
+  a: String
 }
 
-type Image {
+type Image @cacheControl(maxAge: 1000) {
   medium: String
   original: String
 }
