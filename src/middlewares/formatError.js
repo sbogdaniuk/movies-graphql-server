@@ -1,7 +1,7 @@
 import { formatError as apolloFormatError, isInstance } from 'apollo-errors'
 
 import { logger } from '../libs'
-import { UnknownError } from '../schema/errors'
+import { UnknownError } from '../constants/errors'
 
 export const formatError = error => {
   const { originalError } = error

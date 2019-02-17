@@ -1,0 +1,3 @@
+extend type Query {
+  users(ids: [ID!], excludeIds: [ID!]): [User!]!
+}

@@ -1,22 +1,15 @@
 import { and } from 'graphql-shield'
-import { gql } from 'apollo-server-express'
 import filter from 'lodash/filter'
 
-import { isAdmin, isAuthenticated } from '../rules'
+import { shields } from '../../../utils'
 
-const shield = {
+export const shield = {
   Query: {
-    users: and(isAuthenticated, isAdmin)
+    users: and(shields.isAuthenticated, shields.isAdmin)
   }
 }
 
-const typeDefs = gql`
-  extend type Query {
-    users(ids: [ID!], excludeIds: [ID!]): [User!]!
-  }
-`
-
-const resolvers = {
+export const resolvers = {
   Query: {
     users: async (root, { ids, excludeIds }, ctx) => {
       const users = await (async (ids) => {
@@ -35,5 +28,3 @@ const resolvers = {
     },
   },
 }
-
-export const users = { typeDefs, resolvers, shield }

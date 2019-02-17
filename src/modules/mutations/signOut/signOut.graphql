@@ -1,0 +1,7 @@
+extend type Mutation {
+  signOut: SignOutPayload!
+}
+
+type SignOutPayload {
+  status: Int!
+}

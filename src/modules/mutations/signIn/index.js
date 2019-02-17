@@ -1,28 +1,11 @@
 import bcrypt from 'bcrypt'
 import pickBy from 'lodash/pickBy'
 import isEmpty from 'lodash/isEmpty'
-import { gql } from 'apollo-server-express'
 
-import { createTokens, RULES, validate } from '../../utils'
-import { ParamsError, MutationError } from '../errors'
+import { createTokens, RULES, validate } from '../../../utils'
+import { errors } from '../../../constants'
 
-const typeDefs = gql`
-  extend type Mutation {
-    signIn(input: SignInInput!): SignInPayload!
-  }
-
-  input SignInInput {
-    email: String!
-    password: String!
-  }
-
-  type SignInPayload {
-    token: String
-    refreshToken: String
-  }
-`
-
-const resolvers = {
+export const resolvers = {
   Mutation: {
     signIn: {
       validateArgs: (root, args) => {
@@ -34,7 +17,7 @@ const resolvers = {
         })
 
         if (!isEmpty(errors)) {
-          throw new ParamsError({ data: errors })
+          throw new errors.ParamsError({ data: errors })
         }
       },
       resolve: async (obj, args, ctx) => {
@@ -44,13 +27,13 @@ const resolvers = {
         const user = await dataSources.userAPI.getUser({ email })
         if (!user) {
           // user with provided email not found
-          throw new MutationError({ message: 'Invalid login' })
+          throw new errors.MutationError({ message: 'Invalid login' })
         }
 
         const valid = await bcrypt.compare(password, user.password)
         if (!valid) {
           // bad password
-          throw new MutationError({ message: 'Invalid login' })
+          throw new errors.MutationError({ message: 'Invalid login' })
         }
 
         const [token, refreshToken] = await createTokens(user, SECRET, SECRET2 + user.password)
@@ -67,5 +50,3 @@ const resolvers = {
     }
   }
 }
-
-export const signIn = { typeDefs, resolvers }

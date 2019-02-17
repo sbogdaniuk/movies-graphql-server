@@ -1,0 +1,13 @@
+extend type Mutation {
+  signIn(input: SignInInput!): SignInPayload!
+}
+
+input SignInInput {
+  email: String!
+  password: String!
+}
+
+type SignInPayload {
+  token: String
+  refreshToken: String
+}

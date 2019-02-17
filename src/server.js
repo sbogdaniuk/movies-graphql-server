@@ -5,8 +5,9 @@ import jsonServer from 'json-server'
 import { ApolloServer } from 'apollo-server-express'
 
 import { schema } from './schema'
+import { pubsub, psEvents } from './pubsub'
 import { formatError, jwtCheck } from './middlewares'
-import { ShowsAPI, UserAPI } from './api'
+import { ShowsAPI, UserAPI } from './dataSources'
 import { SECRET, SECRET2 } from './config'
 
 import { genDB } from './json-server'
@@ -40,6 +41,8 @@ const startServer = async () => {
         res,
         SECRET,
         SECRET2,
+        pubsub,
+        psEvents,
         user: req.user,
       }
     },

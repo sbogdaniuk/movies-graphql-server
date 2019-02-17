@@ -1,5 +1,5 @@
 import { rule } from 'graphql-shield'
-import { AuthenticationError, RoleError } from './errors'
+import { AuthenticationError, RoleError } from '../constants/errors'
 
 export const isAuthenticated = rule()(async (parent, args, { res, user }, info) => {
   if (user) return true

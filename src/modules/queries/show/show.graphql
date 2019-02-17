@@ -1,0 +1,18 @@
+type Show {
+  id: ID!
+  name: String!
+  type: String
+  language: String
+  genres: [String]!
+  image: Image!
+  summary: String
+}
+
+type Image {
+  medium: String
+  original: String
+}
+
+extend type Query {
+  show(id: ID!): Show
+}
