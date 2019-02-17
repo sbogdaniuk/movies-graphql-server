@@ -46,6 +46,7 @@ const startServer = async () => {
         user: req.user,
       }
     },
+    cacheControl: true,
     playground: true,
     introspection: true,
     subscriptions: {
