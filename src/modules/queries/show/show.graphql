@@ -15,5 +15,5 @@ type Image @cacheControl(maxAge: 1000) {
 }
 
 extend type Query {
-  show(id: ID!): Show
+  show(id: ID!): Show @cacheControl(maxAge: 10)
 }

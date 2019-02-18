@@ -3,11 +3,11 @@ import filter from 'lodash/filter'
 
 import { shields } from '../../../utils'
 
-export const shield = {
-  Query: {
-    users: and(shields.isAuthenticated, shields.isAdmin)
-  }
-}
+// export const shield = {
+//   Query: {
+//     users: and(shields.isAuthenticated, shields.isAdmin)
+//   }
+// }
 
 export const resolvers = {
   Query: {
