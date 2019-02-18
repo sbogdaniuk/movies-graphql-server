@@ -8,7 +8,7 @@ import { ApolloEngine } from 'apollo-engine'
 
 import { schema } from './schema'
 import { psEvents, pubsub } from './pubsub'
-import { formatError } from './middlewares'
+import { formatError, jwtCheck } from './middlewares'
 import { ShowsAPI, UserAPI } from './dataSources'
 import { SECRET, SECRET2 } from './config'
 import { genDB } from './json-server'
@@ -20,7 +20,7 @@ const startServer = async () => {
 
   app.use(cookieParser())
   app.use('/api', jsonServer.defaults(), jsonServer.router(DB))
-  // app.use(jwtCheck({ SECRET, SECRET2 }))
+  app.use(jwtCheck({ SECRET, SECRET2 }))
 
   const dataSources = () => ({
     showsAPI: new ShowsAPI(),
