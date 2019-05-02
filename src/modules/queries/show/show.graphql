@@ -1,4 +1,4 @@
-type Show @cacheControl(maxAge: 240) {
+type Show {
   id: ID!
   name: String!
   type: String
@@ -6,14 +6,13 @@ type Show @cacheControl(maxAge: 240) {
   genres: [String]!
   image: Image!
   summary: String
-  a: String
 }
 
-type Image @cacheControl(maxAge: 1000) {
+type Image {
   medium: String
   original: String
 }
 
 extend type Query {
-  show(id: ID!): Show @cacheControl(maxAge: 10)
+  show(id: ID!): Show
 }

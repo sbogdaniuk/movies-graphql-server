@@ -30,4 +30,8 @@ export class ShowsAPI extends RESTDataSource {
     // and you will use dataloader instead
     // return this.showLoader.load(id)
   }
+
+  async search (params = {}) {
+    return this.getShows(params)
+  }
 }
